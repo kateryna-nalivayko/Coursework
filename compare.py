@@ -1,19 +1,9 @@
-"""
-Порівняння класичних методів розпізнавання якості фруктів.
-
-Читає: results_classical.json  (вихід method2_classical.py)
-Методи: KNN, Linear SVM, RBF SVM, Decision Tree, Random Forest, AdaBoost, Naive Bayes
-
-Запуск: python compare.py
-"""
-
 import json
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
-
 
 with open("results_classical.json", encoding="utf-8") as f:
     cl = json.load(f)
@@ -45,7 +35,6 @@ n = len(methods)
 x = np.arange(n)
 COLOR = "#377eb8"
 
-
 print("\n" + "=" * 95)
 print(f"{'Метод':<18} {'Accuracy':>9} {'AUC':>7} {'F1 Fresh':>9} "
       f"{'F1 Rotten':>10} {'Recall Rotten':>14} {'Inf ms':>8}")
@@ -62,7 +51,6 @@ best_rec = max(methods, key=lambda m: m["recall_rotten"])
 print(f"\nНайкраща Accuracy:       {best_acc['name']}  → {best_acc['accuracy']:.4f}")
 print(f"Найкращий AUC:           {best_auc['name']}  → {best_auc['auc']:.4f}")
 print(f"Найкращий Recall(Rotten):{best_rec['name']}  → {best_rec['recall_rotten']:.4f}")
-
 
 fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 fig.suptitle("Порівняння класичних методів визначення якості фруктів",
@@ -114,7 +102,6 @@ plt.savefig("comparison_metrics.png", dpi=150, bbox_inches="tight")
 plt.close()
 print("\nЗбережено: comparison_metrics.png")
 
-
 fig, ax = plt.subplots(figsize=(10, 5))
 colors_inf = [COLOR] * n
 bars = ax.barh(names_wrap[::-1], inf_times[::-1], color=colors_inf,
@@ -128,7 +115,6 @@ plt.tight_layout()
 plt.savefig("comparison_inference.png", dpi=150)
 plt.close()
 print("Збережено: comparison_inference.png")
-
 
 scored = sorted(methods,
                 key=lambda m: m["accuracy"] + m["auc"] + m["recall_rotten"],
@@ -162,7 +148,6 @@ plt.tight_layout()
 plt.savefig("comparison_radar.png", dpi=150, bbox_inches="tight")
 plt.close()
 print("Збережено: comparison_radar.png")
-
 
 print("\n" + "=" * 65)
 print("ПІДСУМКОВИЙ ВИСНОВОК")
